@@ -4,215 +4,61 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cardio-Bingo AH12G</title>
-  <meta name="description" content="30 Ausdauerübungen für Cardio-Bingo in der Sporthalle – zum Abhaken für die AH12G." />
+  <meta name="description" content="Digitale Cardio-Bingo-Karte für die AH12G: zufällige 5x5-Karte, Übungen abhaken, Zusatzpunkte und Bingo-Bonus." />
   <style>
-    :root {
-      --bg: #f5f7fb;
-      --card: #ffffff;
-      --ink: #172033;
-      --muted: #64748b;
-      --accent: #2563eb;
-      --accent-2: #16a34a;
-      --line: #e2e8f0;
-      --danger: #dc2626;
-      --shadow: 0 10px 25px rgba(15, 23, 42, .08);
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left, #dbeafe, transparent 34rem), var(--bg);
-      color: var(--ink);
-      min-height: 100vh;
-    }
-    header {
-      padding: 28px 18px 16px;
-      max-width: 980px;
-      margin: 0 auto;
-    }
-    .hero {
-      background: linear-gradient(135deg, #1d4ed8, #0f172a);
-      color: white;
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow: var(--shadow);
-    }
-    h1 { margin: 0 0 8px; font-size: clamp(2rem, 7vw, 4rem); line-height: .95; }
-    .subtitle { margin: 0; color: #dbeafe; font-size: 1.05rem; }
-    main { max-width: 980px; margin: 0 auto; padding: 0 18px 32px; }
-    .toolbar {
-      display: grid;
-      gap: 12px;
-      grid-template-columns: 1fr;
-      margin: 16px 0;
-    }
-    .panel, .exercise {
-      background: rgba(255,255,255,.92);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-    }
-    .panel { padding: 16px; }
-    .progress-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
-    .progress-text { font-weight: 800; }
-    .hint { color: var(--muted); font-size: .95rem; }
-    .bar { height: 12px; background: #e2e8f0; border-radius: 999px; overflow: hidden; }
-    .bar span { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width .2s ease; }
-    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
-    button {
-      border: 0;
-      border-radius: 999px;
-      padding: 12px 16px;
-      font-weight: 800;
-      cursor: pointer;
-      background: var(--accent);
-      color: white;
-      box-shadow: 0 6px 16px rgba(37,99,235,.22);
-    }
-    button.secondary { background: white; color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
-    button.danger { background: #fee2e2; color: var(--danger); box-shadow: none; }
-    .grid { display: grid; gap: 12px; grid-template-columns: 1fr; }
-    .exercise {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 12px;
-      align-items: start;
-      padding: 14px;
-      min-height: 86px;
-    }
-    .exercise.done { border-color: #86efac; background: #f0fdf4; }
-    input[type="checkbox"] { width: 28px; height: 28px; accent-color: var(--accent-2); margin-top: 3px; }
-    .title { font-weight: 900; font-size: 1.04rem; }
-    .target { margin-top: 4px; color: var(--muted); }
-    .number { color: var(--accent); font-weight: 900; margin-right: 4px; }
-    footer { text-align: center; color: var(--muted); padding: 10px 0 28px; }
-    @media (min-width: 720px) {
-      .toolbar { grid-template-columns: 1.2fr .8fr; align-items: stretch; }
-      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media print {
-      body { background: white; }
-      .hero, .panel, .exercise { box-shadow: none; }
-      button, .actions { display: none; }
-      .grid { grid-template-columns: repeat(2, 1fr); }
-    }
+    :root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#64748b;--accent:#2563eb;--green:#16a34a;--orange:#f97316;--line:#e2e8f0;--danger:#dc2626;--shadow:0 10px 25px rgba(15,23,42,.08)}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at top left,#dbeafe,transparent 34rem),var(--bg);color:var(--ink);min-height:100vh} header,main{max-width:1120px;margin:0 auto;padding-left:14px;padding-right:14px} header{padding-top:20px;padding-bottom:12px}.hero{background:linear-gradient(135deg,#1d4ed8,#0f172a);color:white;border-radius:22px;padding:20px;box-shadow:var(--shadow)}h1{margin:0 0 7px;font-size:clamp(2rem,7vw,4rem);line-height:.95}.subtitle{margin:0;color:#dbeafe;font-size:1rem}.panel,.cell{background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.panel{padding:14px;margin:12px 0}.top{display:grid;gap:12px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:white;border:1px solid var(--line);border-radius:15px;padding:10px;text-align:center}.stat strong{display:block;font-size:1.45rem}.hint{color:var(--muted);font-size:.92rem}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}button{border:0;border-radius:999px;padding:11px 14px;font-weight:850;cursor:pointer;background:var(--accent);color:white;box-shadow:0 6px 16px rgba(37,99,235,.22)}button.secondary{background:white;color:var(--ink);border:1px solid var(--line);box-shadow:none}button.danger{background:#fee2e2;color:var(--danger);box-shadow:none}.team{display:grid;gap:8px;grid-template-columns:1fr 1fr;margin-top:10px}.team input{width:100%;padding:12px;border:1px solid var(--line);border-radius:13px;font-size:1rem}.bingo-wrap{overflow-x:auto;padding-bottom:8px}.bingo{display:grid;grid-template-columns:repeat(5,minmax(138px,1fr));gap:8px;min-width:720px}.cell{min-height:172px;padding:10px;display:flex;flex-direction:column;gap:7px;position:relative}.cell.done{background:#f0fdf4;border-color:#86efac}.cell.bingo-line{outline:4px solid #facc15}.cell-head{display:flex;align-items:flex-start;gap:7px}.check{width:26px;height:26px;accent-color:var(--green);flex:0 0 auto}.exercise{font-weight:900;line-height:1.12}.target{color:var(--muted);font-size:.82rem;line-height:1.2}.points{margin-top:auto;display:grid;gap:5px}.points label{font-size:.78rem;color:var(--muted);font-weight:800}.points input{width:100%;padding:8px;border:1px solid var(--line);border-radius:10px;font-size:1rem}.badge{position:absolute;right:8px;top:8px;background:#dcfce7;color:#166534;border-radius:999px;padding:3px 7px;font-size:.75rem;font-weight:900;display:none}.cell.done .badge{display:block}.bonus{font-weight:900;color:#166534}.bar{height:11px;background:#e2e8f0;border-radius:999px;overflow:hidden;margin-top:10px}.bar span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--green));transition:width .2s ease}.rules{display:grid;gap:6px;margin:0;padding-left:18px}.rules li{margin:0}.win{background:#fff7ed;border-color:#fdba74}.win strong{color:#9a3412}footer{text-align:center;color:var(--muted);padding:10px 0 26px}@media(min-width:850px){.top{grid-template-columns:1.2fr .8fr}.team{grid-template-columns:1fr 1fr}}@media(max-width:520px){header,main{padding-left:10px;padding-right:10px}.stats{grid-template-columns:1fr 1fr 1fr}.stat{padding:8px}.stat strong{font-size:1.2rem}.bingo{min-width:690px;grid-template-columns:repeat(5,132px)}.cell{min-height:168px}}@media print{body{background:white}.hero,.panel,.cell{box-shadow:none}button,.actions{display:none}.bingo{min-width:0;grid-template-columns:repeat(5,1fr)}.cell{min-height:145px}.points input{border:0;border-bottom:1px solid #999;border-radius:0}.bingo-wrap{overflow:visible}}
   </style>
 </head>
 <body>
-  <header>
-    <section class="hero">
-      <h1>Cardio-Bingo</h1>
-      <p class="subtitle">AH12G · 30 Ausdauerübungen für die Halle · Wählt 25 Übungen für eure 5×5-Bingo-Karte aus.</p>
-    </section>
-  </header>
-
+  <header><section class="hero"><h1>Cardio-Bingo</h1><p class="subtitle">AH12G · digitale 5×5-Bingo-Karte · Übungen abhaken, Zusatzpunkte sammeln, Bingo-Bonus notieren.</p></section></header>
   <main>
-    <section class="toolbar">
+    <section class="top">
       <div class="panel">
-        <div class="progress-row">
-          <div class="progress-text"><span id="count">0</span> / 25 ausgewählt</div>
-          <div class="hint" id="status">Noch 25 Übungen wählen</div>
-        </div>
-        <div class="bar" aria-label="Fortschritt"><span id="bar"></span></div>
-        <div class="actions">
-          <button id="random">25 zufällig auswählen</button>
-          <button class="secondary" onclick="window.print()">Drucken</button>
-          <button class="secondary" onclick="location.href='spielleiter.html'">Spielleiter</button>
-          <button class="danger" id="reset">Zurücksetzen</button>
-        </div>
+        <strong>Team eintragen</strong>
+        <div class="team"><input id="name1" placeholder="Name 1"><input id="name2" placeholder="Name 2"></div>
+        <div class="actions"><button id="newCard">Neue zufällige Karte</button><button class="secondary" onclick="window.print()">Drucken</button><button class="secondary" onclick="location.href='spielleiter.html'">Spielleiter</button><button class="danger" id="reset">Zurücksetzen</button></div>
       </div>
-      <div class="panel hint">
-        <strong>So geht’s:</strong><br />
-        Hakt die Übungen ab, die ihr auf eure Bingo-Karte übertragt. Im Spiel arbeitet ihr später partnerweise: Eine Person führt aus, die andere pausiert, dann Wechsel.
+      <div class="panel">
+        <div class="stats"><div class="stat"><strong id="doneCount">0</strong><span>erledigt</span></div><div class="stat"><strong id="bingoCount">0</strong><span>Bingos</span></div><div class="stat"><strong id="totalPoints">0</strong><span>Punkte</span></div></div>
+        <div class="bar"><span id="bar"></span></div>
+        <p class="hint">Punkte = Zusatzpunkte + 2 Punkte pro Bingo. Eure Karte bleibt auf diesem Gerät gespeichert.</p>
       </div>
     </section>
 
-    <section class="grid" id="list"></section>
-  </main>
+    <section id="winBox" class="panel win" hidden><strong>Bingo!</strong> Ihr habt mindestens eine vollständige Reihe, Spalte oder Diagonale. Dafür gibt es automatisch 2 Extra-Punkte pro Bingo.</section>
 
+    <section class="panel hint"><ul class="rules"><li>Partnerarbeit: Eine Person führt aus, die andere pausiert, dann Wechsel.</li><li>Feld abhaken, wenn eure Gruppe die Übung geschafft hat.</li><li>Wenn ihr eine Übung am schnellsten geschafft habt, Zusatzpunkt(e) im Feld eintragen.</li></ul></section>
+
+    <section class="bingo-wrap"><div id="bingo" class="bingo"></div></section>
+  </main>
   <footer>Saubere Ausführung vor Tempo. Bei Bedarf gelenkschonende Variante wählen.</footer>
 
-  <script>
-    const exercises = [
-      ["Burpees", "20 Wiederholungen gesamt"],
-      ["Mountain Climbers", "80 Kontakte gesamt"],
-      ["Hampelmänner / Jumping Jacks", "100 Wiederholungen gesamt"],
-      ["High Knees auf der Stelle", "100 Kniehebeläufe gesamt"],
-      ["Skippings zur Hallenlinie und zurück", "6 Bahnen gesamt"],
-      ["Volleyballfeld umrunden", "4 Runden gesamt"],
-      ["Shuttle Runs zwischen zwei Linien", "12 Läufe gesamt"],
-      ["Seilspringen ohne Seil", "100 Sprünge gesamt"],
-      ["Squat Jumps", "40 Wiederholungen gesamt"],
-      ["Jump Lunges / springende Ausfallschritte", "40 Wiederholungen gesamt"],
-      ["Seitgalopp zur Linie und zurück", "8 Bahnen gesamt"],
-      ["Bärenlauf / Bear Crawl", "4 Bahnen gesamt"],
-      ["Krebsgang / Crab Walk", "4 Bahnen gesamt"],
-      ["Plank Jacks", "50 Wiederholungen gesamt"],
-      ["Froschsprünge / Frog Jumps", "30 Sprünge gesamt"],
-      ["Schattenboxen schnell", "2 × 45 Sekunden gesamt"],
-      ["Sprint zur Wand und zurück", "10 Läufe gesamt"],
-      ["Treppchenlauf auf einer Hallenlinie", "80 schnelle Kontakte gesamt"],
-      ["Anfersen auf der Stelle", "100 Kontakte gesamt"],
-      ["Seitliche Sprünge über eine Linie", "80 Sprünge gesamt"],
-      ["Tuck Jumps / Knie zur Brust", "25 Sprünge gesamt"],
-      ["Inchworms", "20 Wiederholungen gesamt"],
-      ["Schulter-Taps in Liegestützposition", "60 Taps gesamt"],
-      ["Speed Skater Jumps", "60 Sprünge gesamt"],
-      ["Rückwärtslaufen zur Linie, vorwärts zurück", "6 Bahnen gesamt"],
-      ["Diagonal-Sprints von Ecke zu Ecke", "6 Läufe gesamt"],
-      ["Kniebeuge + Strecksprung", "40 Wiederholungen gesamt"],
-      ["Vierfüßlerlauf vorwärts/rückwärts", "4 Bahnen gesamt"],
-      ["Linien-Hopping vor und zurück", "80 Sprünge gesamt"],
-      ["Mattenlauf um eine Matte herum", "6 Runden gesamt"]
-    ];
-
-    const list = document.querySelector('#list');
-    const count = document.querySelector('#count');
-    const statusText = document.querySelector('#status');
-    const bar = document.querySelector('#bar');
-    const key = 'cardio-bingo-ah12g-selected';
-    let selected = new Set(JSON.parse(localStorage.getItem(key) || '[]'));
-
-    function save() { localStorage.setItem(key, JSON.stringify([...selected])); }
-    function update() {
-      const n = selected.size;
-      count.textContent = n;
-      bar.style.width = `${Math.min(n, 25) / 25 * 100}%`;
-      if (n < 25) statusText.textContent = `Noch ${25 - n} Übungen wählen`;
-      else if (n === 25) statusText.textContent = 'Perfekt: Bingo-Karte ist voll';
-      else statusText.textContent = `${n - 25} zu viel ausgewählt`;
-      document.querySelectorAll('.exercise').forEach((card, i) => card.classList.toggle('done', selected.has(i)));
-    }
-
-    exercises.forEach(([name, target], i) => {
-      const label = document.createElement('label');
-      label.className = 'exercise';
-      label.innerHTML = `
-        <input type="checkbox" ${selected.has(i) ? 'checked' : ''} aria-label="${name} auswählen" />
-        <span><span class="title"><span class="number">${i + 1}.</span>${name}</span><span class="target">${target}</span></span>
-      `;
-      const checkbox = label.querySelector('input');
-      checkbox.addEventListener('change', () => {
-        checkbox.checked ? selected.add(i) : selected.delete(i);
-        save(); update();
-      });
-      list.appendChild(label);
-    });
-
-    document.querySelector('#reset').addEventListener('click', () => {
-      selected.clear();
-      document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-      save(); update();
-    });
-
-    document.querySelector('#random').addEventListener('click', () => {
-      selected.clear();
-      [...Array(exercises.length).keys()].sort(() => Math.random() - .5).slice(0,25).forEach(i => selected.add(i));
-      document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => cb.checked = selected.has(i));
-      save(); update();
-    });
-
-    update();
-  </script>
+<script>
+const exercises=[
+["Burpees","20 Wiederholungen gesamt"],["Mountain Climbers","80 Kontakte gesamt"],["Hampelmänner","100 Wiederholungen gesamt"],["High Knees","100 Kniehebeläufe gesamt"],["Skippings zur Linie","6 Bahnen gesamt"],["Volleyballfeld umrunden","4 Runden gesamt"],["Shuttle Runs","12 Läufe gesamt"],["Seilspringen ohne Seil","100 Sprünge gesamt"],["Squat Jumps","40 Wiederholungen gesamt"],["Jump Lunges","40 Wiederholungen gesamt"],["Seitgalopp","8 Bahnen gesamt"],["Bärenlauf","4 Bahnen gesamt"],["Krebsgang","4 Bahnen gesamt"],["Plank Jacks","50 Wiederholungen gesamt"],["Froschsprünge","30 Sprünge gesamt"],["Schattenboxen schnell","2 × 45 Sekunden gesamt"],["Sprint Wand zurück","10 Läufe gesamt"],["Treppchenlauf Linie","80 Kontakte gesamt"],["Anfersen","100 Kontakte gesamt"],["Seitliche Liniensprünge","80 Sprünge gesamt"],["Tuck Jumps","25 Sprünge gesamt"],["Inchworms","20 Wiederholungen gesamt"],["Schulter-Taps","60 Taps gesamt"],["Speed Skater Jumps","60 Sprünge gesamt"],["Rückwärts/vorwärts laufen","6 Bahnen gesamt"],["Diagonal-Sprints","6 Läufe gesamt"],["Kniebeuge + Strecksprung","40 Wiederholungen gesamt"],["Vierfüßlerlauf","4 Bahnen gesamt"],["Linien-Hopping","80 Sprünge gesamt"],["Mattenlauf","6 Runden gesamt"]
+];
+const key='cardio-bingo-ah12g-card-v2';
+let state=JSON.parse(localStorage.getItem(key)||'null');
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function fresh(){return {card:shuffle([...Array(exercises.length).keys()]).slice(0,25),done:{},points:{},names:['','']}}
+if(!state) state=fresh();
+const $=s=>document.querySelector(s);
+function save(){localStorage.setItem(key,JSON.stringify(state))}
+function lines(){const L=[];for(let r=0;r<5;r++)L.push([0,1,2,3,4].map(c=>r*5+c));for(let c=0;c<5;c++)L.push([0,1,2,3,4].map(r=>r*5+c));L.push([0,6,12,18,24],[4,8,12,16,20]);return L}
+function bingoLines(){return lines().filter(line=>line.every(pos=>state.done[pos]))}
+function render(){
+ $('#name1').value=state.names?.[0]||''; $('#name2').value=state.names?.[1]||'';
+ const bingos=bingoLines(); const bingoPos=new Set(bingos.flat()); const doneN=Object.values(state.done).filter(Boolean).length; const extra=Object.values(state.points).reduce((s,v)=>s+(parseInt(v,10)||0),0); const total=extra+bingos.length*2;
+ $('#doneCount').textContent=doneN; $('#bingoCount').textContent=bingos.length; $('#totalPoints').textContent=total; $('#bar').style.width=`${doneN/25*100}%`; $('#winBox').hidden=bingos.length===0;
+ const board=$('#bingo'); board.innerHTML='';
+ state.card.forEach((exIndex,pos)=>{const [name,target]=exercises[exIndex]; const cell=document.createElement('div'); cell.className='cell'+(state.done[pos]?' done':'')+(bingoPos.has(pos)?' bingo-line':''); cell.innerHTML=`<span class="badge">✓</span><div class="cell-head"><input class="check" type="checkbox" ${state.done[pos]?'checked':''} aria-label="${name} erledigt"><div><div class="exercise">${name}</div><div class="target">${target}</div></div></div><div class="points"><label>Zusatzpunkte</label><input type="number" min="0" step="1" inputmode="numeric" value="${state.points[pos]||''}" placeholder="0"></div>`;
+ cell.querySelector('.check').addEventListener('change',e=>{state.done[pos]=e.target.checked;save();render()}); cell.querySelector('input[type=number]').addEventListener('input',e=>{state.points[pos]=e.target.value;save();render()}); board.appendChild(cell);});
+}
+['name1','name2'].forEach((id,i)=>$("#"+id).addEventListener('input',e=>{state.names=state.names||['',''];state.names[i]=e.target.value;save()}));
+$('#newCard').addEventListener('click',()=>{if(confirm('Neue zufällige Bingo-Karte erstellen? Bisherige Haken und Punkte gehen verloren.')){state=fresh();save();render()}});
+$('#reset').addEventListener('click',()=>{if(confirm('Haken und Punkte zurücksetzen? Die Übungen bleiben gleich.')){state.done={};state.points={};save();render()}});
+render();
+</script>
 </body>
 </html>
