@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spielleiter · Cardio-Bingo AH12G</title>
+  <meta name="description" content="Spielleiter-Seite für Cardio-Bingo: zufällige Übungen ziehen und verbleibende Übungen im Blick behalten." />
+  <style>
+    :root { --bg:#f5f7fb; --card:#fff; --ink:#172033; --muted:#64748b; --accent:#2563eb; --green:#16a34a; --orange:#f97316; --line:#e2e8f0; --danger:#dc2626; --shadow:0 10px 25px rgba(15,23,42,.08); }
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at top left,#dbeafe,transparent 34rem),var(--bg);color:var(--ink);min-height:100vh} main,header{max-width:980px;margin:0 auto;padding-left:18px;padding-right:18px} header{padding-top:28px;padding-bottom:16px}.hero{background:linear-gradient(135deg,#0f172a,#1d4ed8);color:white;border-radius:24px;padding:24px;box-shadow:var(--shadow)} h1{margin:0 0 8px;font-size:clamp(2rem,7vw,3.6rem);line-height:.95}.subtitle{margin:0;color:#dbeafe;font-size:1.05rem}.panel,.exercise,.draw-card{background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.panel{padding:16px;margin-bottom:16px}.login{max-width:520px;margin:20px auto}.login input{width:100%;font-size:1.15rem;padding:14px 16px;border:1px solid var(--line);border-radius:14px;margin:10px 0}.hint{color:var(--muted);font-size:.95rem}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}button{border:0;border-radius:999px;padding:12px 16px;font-weight:850;cursor:pointer;background:var(--accent);color:white;box-shadow:0 6px 16px rgba(37,99,235,.22)}button.secondary{background:white;color:var(--ink);border:1px solid var(--line);box-shadow:none}button.danger{background:#fee2e2;color:var(--danger);box-shadow:none}button.green{background:var(--green)}button:disabled{opacity:.45;cursor:not-allowed}.draw-card{padding:22px;margin-bottom:16px;border-color:#bfdbfe}.label{text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-size:.78rem;font-weight:900}.current{font-size:clamp(1.8rem,6vw,3.6rem);font-weight:950;margin:8px 0 6px;line-height:1}.target{font-size:1.15rem;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}.stat{background:white;border:1px solid var(--line);border-radius:16px;padding:12px;text-align:center}.stat strong{display:block;font-size:1.7rem}.bar{height:12px;background:#e2e8f0;border-radius:999px;overflow:hidden}.bar span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--green));transition:width .2s ease}.grid{display:grid;gap:10px;grid-template-columns:1fr}.exercise{padding:12px;display:flex;gap:10px;align-items:flex-start}.exercise.used{background:#f1f5f9;color:#94a3b8}.exercise.current-hit{border-color:#fdba74;background:#fff7ed;color:var(--ink)}.num{font-weight:950;color:var(--accent);min-width:2rem}.exercise.used .num{color:#94a3b8}.name{font-weight:850}.small{font-size:.9rem;color:var(--muted);margin-top:2px}footer{text-align:center;color:var(--muted);padding:10px 0 28px}@media(min-width:720px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media print{button,.actions,.login{display:none}.hero,.panel,.exercise,.draw-card{box-shadow:none}body{background:white}}
+  </style>
+</head>
+<body>
+  <header>
+    <section class="hero">
+      <h1>Spielleiter</h1>
+      <p class="subtitle">Cardio-Bingo AH12G · Übungen zufällig ziehen, verbrauchte Übungen im Blick behalten.</p>
+    </section>
+  </header>
+
+  <main>
+    <section id="login" class="panel login">
+      <h2>Zugang</h2>
+      <p class="hint">Diese Seite ist für die Spielleitung gedacht.</p>
+      <input id="password" type="password" placeholder="Passwort eingeben" autocomplete="current-password" />
+      <div class="actions"><button id="unlock">Entsperren</button><button class="secondary" onclick="location.href='index.html'">Zurück</button></div>
+      <p id="error" class="hint" style="color:var(--danger);display:none">Passwort stimmt nicht.</p>
+    </section>
+
+    <section id="app" hidden>
+      <section class="draw-card">
+        <div class="label">Aktuelle Übung</div>
+        <div id="current" class="current">Noch keine Übung gezogen</div>
+        <div id="currentTarget" class="target">Klicke auf „Nächste Übung ziehen“.</div>
+        <div class="actions">
+          <button id="draw" class="green">Nächste Übung ziehen</button>
+          <button class="secondary" id="undo">Letzte zurücknehmen</button>
+          <button class="danger" id="reset">Runde zurücksetzen</button>
+          <button class="secondary" onclick="location.href='index.html'">Zur Schülerseite</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="stats">
+          <div class="stat"><strong id="usedCount">0</strong><span>gezogen</span></div>
+          <div class="stat"><strong id="leftCount">30</strong><span>übrig</span></div>
+          <div class="stat"><strong id="roundCount">1</strong><span>Runde</span></div>
+        </div>
+        <div class="bar"><span id="bar"></span></div>
+        <p class="hint">Orange = aktuelle Übung. Grau = bereits gezogen. Die Reihenfolge bleibt in diesem Browser gespeichert.</p>
+      </section>
+
+      <section class="grid" id="list"></section>
+    </section>
+  </main>
+
+  <footer>Passwort: AH12G · Für echten Datenschutz wäre ein Server-Login nötig.</footer>
+
+  <script>
+    const PASSWORD = 'AH12G';
+    const exercises = [
+      ["Burpees", "20 Wiederholungen gesamt"], ["Mountain Climbers", "80 Kontakte gesamt"], ["Hampelmänner / Jumping Jacks", "100 Wiederholungen gesamt"], ["High Knees auf der Stelle", "100 Kniehebeläufe gesamt"], ["Skippings zur Hallenlinie und zurück", "6 Bahnen gesamt"], ["Volleyballfeld umrunden", "4 Runden gesamt"], ["Shuttle Runs zwischen zwei Linien", "12 Läufe gesamt"], ["Seilspringen ohne Seil", "100 Sprünge gesamt"], ["Squat Jumps", "40 Wiederholungen gesamt"], ["Jump Lunges / springende Ausfallschritte", "40 Wiederholungen gesamt"], ["Seitgalopp zur Linie und zurück", "8 Bahnen gesamt"], ["Bärenlauf / Bear Crawl", "4 Bahnen gesamt"], ["Krebsgang / Crab Walk", "4 Bahnen gesamt"], ["Plank Jacks", "50 Wiederholungen gesamt"], ["Froschsprünge / Frog Jumps", "30 Sprünge gesamt"], ["Schattenboxen schnell", "2 × 45 Sekunden gesamt"], ["Sprint zur Wand und zurück", "10 Läufe gesamt"], ["Treppchenlauf auf einer Hallenlinie", "80 schnelle Kontakte gesamt"], ["Anfersen auf der Stelle", "100 Kontakte gesamt"], ["Seitliche Sprünge über eine Linie", "80 Sprünge gesamt"], ["Tuck Jumps / Knie zur Brust", "25 Sprünge gesamt"], ["Inchworms", "20 Wiederholungen gesamt"], ["Schulter-Taps in Liegestützposition", "60 Taps gesamt"], ["Speed Skater Jumps", "60 Sprünge gesamt"], ["Rückwärtslaufen zur Linie, vorwärts zurück", "6 Bahnen gesamt"], ["Diagonal-Sprints von Ecke zu Ecke", "6 Läufe gesamt"], ["Kniebeuge + Strecksprung", "40 Wiederholungen gesamt"], ["Vierfüßlerlauf vorwärts/rückwärts", "4 Bahnen gesamt"], ["Linien-Hopping vor und zurück", "80 Sprünge gesamt"], ["Mattenlauf um eine Matte herum", "6 Runden gesamt"]
+    ];
+    const authKey='cardio-bingo-leader-auth';
+    const stateKey='cardio-bingo-leader-state';
+    let state = JSON.parse(localStorage.getItem(stateKey) || '{"used":[],"current":null,"round":1}');
+    const $ = s => document.querySelector(s);
+    function save(){ localStorage.setItem(stateKey, JSON.stringify(state)); }
+    function showApp(){ $('#login').hidden=true; $('#app').hidden=false; render(); }
+    function unlock(){ if($('#password').value.trim()===PASSWORD){ sessionStorage.setItem(authKey,'yes'); showApp(); } else { $('#error').style.display='block'; } }
+    $('#unlock').addEventListener('click', unlock); $('#password').addEventListener('keydown', e=>{ if(e.key==='Enter') unlock(); }); if(sessionStorage.getItem(authKey)==='yes') showApp();
+    function render(){
+      const used = new Set(state.used); const left = exercises.length - used.size;
+      $('#usedCount').textContent = used.size; $('#leftCount').textContent = left; $('#roundCount').textContent = state.round; $('#bar').style.width = `${used.size/exercises.length*100}%`;
+      if(state.current === null){ $('#current').textContent = 'Noch keine Übung gezogen'; $('#currentTarget').textContent = 'Klicke auf „Nächste Übung ziehen“.'; }
+      else { $('#current').textContent = `${state.current+1}. ${exercises[state.current][0]}`; $('#currentTarget').textContent = exercises[state.current][1]; }
+      $('#draw').disabled = left === 0; $('#undo').disabled = state.used.length === 0;
+      const list=$('#list'); list.innerHTML=''; exercises.forEach(([name,target],i)=>{ const card=document.createElement('div'); card.className='exercise'+(used.has(i)?' used':'')+(state.current===i?' current-hit':''); card.innerHTML=`<span class="num">${i+1}</span><span><span class="name">${name}</span><div class="small">${target}</div></span>`; list.appendChild(card); });
+    }
+    $('#draw').addEventListener('click', ()=>{ const used=new Set(state.used); const left=exercises.map((_,i)=>i).filter(i=>!used.has(i)); if(!left.length) return; const pick=left[Math.floor(Math.random()*left.length)]; state.used.push(pick); state.current=pick; save(); render(); });
+    $('#undo').addEventListener('click', ()=>{ state.used.pop(); state.current=state.used.length ? state.used[state.used.length-1] : null; save(); render(); });
+    $('#reset').addEventListener('click', ()=>{ if(confirm('Alle gezogenen Übungen zurücksetzen?')){ state={used:[],current:null,round:(state.round||1)+1}; save(); render(); }});
+  </script>
+</body>
+</html>
