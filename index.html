@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cardio-Bingo AH12G</title>
+  <meta name="description" content="30 Ausdauerübungen für Cardio-Bingo in der Sporthalle – zum Abhaken für die AH12G." />
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --ink: #172033;
+      --muted: #64748b;
+      --accent: #2563eb;
+      --accent-2: #16a34a;
+      --line: #e2e8f0;
+      --danger: #dc2626;
+      --shadow: 0 10px 25px rgba(15, 23, 42, .08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #dbeafe, transparent 34rem), var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+    header {
+      padding: 28px 18px 16px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .hero {
+      background: linear-gradient(135deg, #1d4ed8, #0f172a);
+      color: white;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+    h1 { margin: 0 0 8px; font-size: clamp(2rem, 7vw, 4rem); line-height: .95; }
+    .subtitle { margin: 0; color: #dbeafe; font-size: 1.05rem; }
+    main { max-width: 980px; margin: 0 auto; padding: 0 18px 32px; }
+    .toolbar {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr;
+      margin: 16px 0;
+    }
+    .panel, .exercise {
+      background: rgba(255,255,255,.92);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+    .panel { padding: 16px; }
+    .progress-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+    .progress-text { font-weight: 800; }
+    .hint { color: var(--muted); font-size: .95rem; }
+    .bar { height: 12px; background: #e2e8f0; border-radius: 999px; overflow: hidden; }
+    .bar span { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width .2s ease; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-weight: 800;
+      cursor: pointer;
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 6px 16px rgba(37,99,235,.22);
+    }
+    button.secondary { background: white; color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+    button.danger { background: #fee2e2; color: var(--danger); box-shadow: none; }
+    .grid { display: grid; gap: 12px; grid-template-columns: 1fr; }
+    .exercise {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px;
+      min-height: 86px;
+    }
+    .exercise.done { border-color: #86efac; background: #f0fdf4; }
+    input[type="checkbox"] { width: 28px; height: 28px; accent-color: var(--accent-2); margin-top: 3px; }
+    .title { font-weight: 900; font-size: 1.04rem; }
+    .target { margin-top: 4px; color: var(--muted); }
+    .number { color: var(--accent); font-weight: 900; margin-right: 4px; }
+    footer { text-align: center; color: var(--muted); padding: 10px 0 28px; }
+    @media (min-width: 720px) {
+      .toolbar { grid-template-columns: 1.2fr .8fr; align-items: stretch; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media print {
+      body { background: white; }
+      .hero, .panel, .exercise { box-shadow: none; }
+      button, .actions { display: none; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <section class="hero">
+      <h1>Cardio-Bingo</h1>
+      <p class="subtitle">AH12G · 30 Ausdauerübungen für die Halle · Wählt 25 Übungen für eure 5×5-Bingo-Karte aus.</p>
+    </section>
+  </header>
+
+  <main>
+    <section class="toolbar">
+      <div class="panel">
+        <div class="progress-row">
+          <div class="progress-text"><span id="count">0</span> / 25 ausgewählt</div>
+          <div class="hint" id="status">Noch 25 Übungen wählen</div>
+        </div>
+        <div class="bar" aria-label="Fortschritt"><span id="bar"></span></div>
+        <div class="actions">
+          <button id="random">25 zufällig auswählen</button>
+          <button class="secondary" onclick="window.print()">Drucken</button>
+          <button class="danger" id="reset">Zurücksetzen</button>
+        </div>
+      </div>
+      <div class="panel hint">
+        <strong>So geht’s:</strong><br />
+        Hakt die Übungen ab, die ihr auf eure Bingo-Karte übertragt. Im Spiel arbeitet ihr später partnerweise: Eine Person führt aus, die andere pausiert, dann Wechsel.
+      </div>
+    </section>
+
+    <section class="grid" id="list"></section>
+  </main>
+
+  <footer>Saubere Ausführung vor Tempo. Bei Bedarf gelenkschonende Variante wählen.</footer>
+
+  <script>
+    const exercises = [
+      ["Burpees", "20 Wiederholungen gesamt"],
+      ["Mountain Climbers", "80 Kontakte gesamt"],
+      ["Hampelmänner / Jumping Jacks", "100 Wiederholungen gesamt"],
+      ["High Knees auf der Stelle", "100 Kniehebeläufe gesamt"],
+      ["Skippings zur Hallenlinie und zurück", "6 Bahnen gesamt"],
+      ["Volleyballfeld umrunden", "4 Runden gesamt"],
+      ["Shuttle Runs zwischen zwei Linien", "12 Läufe gesamt"],
+      ["Seilspringen ohne Seil", "100 Sprünge gesamt"],
+      ["Squat Jumps", "40 Wiederholungen gesamt"],
+      ["Jump Lunges / springende Ausfallschritte", "40 Wiederholungen gesamt"],
+      ["Seitgalopp zur Linie und zurück", "8 Bahnen gesamt"],
+      ["Bärenlauf / Bear Crawl", "4 Bahnen gesamt"],
+      ["Krebsgang / Crab Walk", "4 Bahnen gesamt"],
+      ["Plank Jacks", "50 Wiederholungen gesamt"],
+      ["Froschsprünge / Frog Jumps", "30 Sprünge gesamt"],
+      ["Schattenboxen schnell", "2 × 45 Sekunden gesamt"],
+      ["Sprint zur Wand und zurück", "10 Läufe gesamt"],
+      ["Treppchenlauf auf einer Hallenlinie", "80 schnelle Kontakte gesamt"],
+      ["Anfersen auf der Stelle", "100 Kontakte gesamt"],
+      ["Seitliche Sprünge über eine Linie", "80 Sprünge gesamt"],
+      ["Tuck Jumps / Knie zur Brust", "25 Sprünge gesamt"],
+      ["Inchworms", "20 Wiederholungen gesamt"],
+      ["Schulter-Taps in Liegestützposition", "60 Taps gesamt"],
+      ["Speed Skater Jumps", "60 Sprünge gesamt"],
+      ["Rückwärtslaufen zur Linie, vorwärts zurück", "6 Bahnen gesamt"],
+      ["Diagonal-Sprints von Ecke zu Ecke", "6 Läufe gesamt"],
+      ["Kniebeuge + Strecksprung", "40 Wiederholungen gesamt"],
+      ["Vierfüßlerlauf vorwärts/rückwärts", "4 Bahnen gesamt"],
+      ["Linien-Hopping vor und zurück", "80 Sprünge gesamt"],
+      ["Mattenlauf um eine Matte herum", "6 Runden gesamt"]
+    ];
+
+    const list = document.querySelector('#list');
+    const count = document.querySelector('#count');
+    const statusText = document.querySelector('#status');
+    const bar = document.querySelector('#bar');
+    const key = 'cardio-bingo-ah12g-selected';
+    let selected = new Set(JSON.parse(localStorage.getItem(key) || '[]'));
+
+    function save() { localStorage.setItem(key, JSON.stringify([...selected])); }
+    function update() {
+      const n = selected.size;
+      count.textContent = n;
+      bar.style.width = `${Math.min(n, 25) / 25 * 100}%`;
+      if (n < 25) statusText.textContent = `Noch ${25 - n} Übungen wählen`;
+      else if (n === 25) statusText.textContent = 'Perfekt: Bingo-Karte ist voll';
+      else statusText.textContent = `${n - 25} zu viel ausgewählt`;
+      document.querySelectorAll('.exercise').forEach((card, i) => card.classList.toggle('done', selected.has(i)));
+    }
+
+    exercises.forEach(([name, target], i) => {
+      const label = document.createElement('label');
+      label.className = 'exercise';
+      label.innerHTML = `
+        <input type="checkbox" ${selected.has(i) ? 'checked' : ''} aria-label="${name} auswählen" />
+        <span><span class="title"><span class="number">${i + 1}.</span>${name}</span><span class="target">${target}</span></span>
+      `;
+      const checkbox = label.querySelector('input');
+      checkbox.addEventListener('change', () => {
+        checkbox.checked ? selected.add(i) : selected.delete(i);
+        save(); update();
+      });
+      list.appendChild(label);
+    });
+
+    document.querySelector('#reset').addEventListener('click', () => {
+      selected.clear();
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+      save(); update();
+    });
+
+    document.querySelector('#random').addEventListener('click', () => {
+      selected.clear();
+      [...Array(exercises.length).keys()].sort(() => Math.random() - .5).slice(0,25).forEach(i => selected.add(i));
+      document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => cb.checked = selected.has(i));
+      save(); update();
+    });
+
+    update();
+  </script>
+</body>
+</html>
