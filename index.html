@@ -22,13 +22,13 @@
       <div class="panel">
         <div class="stats"><div class="stat"><strong id="doneCount">0</strong><span>erledigt</span></div><div class="stat"><strong id="bingoCount">0</strong><span>Bingos</span></div><div class="stat"><strong id="totalPoints">0</strong><span>Punkte</span></div></div>
         <div class="bar"><span id="bar"></span></div>
-        <p class="hint">Punkte = Zusatzpunkte + 2 Punkte pro Bingo. Eure Karte bleibt auf diesem Gerät gespeichert.</p>
+        <p class="hint">Punkte = 1 Punkt pro erledigtem Feld + Schnellsten-Extrapunkte + 2 Punkte pro Bingo. Eure Karte bleibt auf diesem Gerät gespeichert.</p>
       </div>
     </section>
 
     <section id="winBox" class="panel win" hidden><strong>Bingo!</strong> Ihr habt mindestens eine vollständige Reihe, Spalte oder Diagonale. Dafür gibt es automatisch 2 Extra-Punkte pro Bingo.</section>
 
-    <section class="panel hint"><ul class="rules"><li>Partnerarbeit: Eine Person führt aus, die andere pausiert, dann Wechsel.</li><li>Feld abhaken, wenn eure Gruppe die Übung geschafft hat.</li><li>Wenn ihr eine Übung am schnellsten geschafft habt, Zusatzpunkt(e) im Feld eintragen.</li></ul></section>
+    <section class="panel hint"><ul class="rules"><li>Partnerarbeit: Eine Person führt aus, die andere pausiert, dann Wechsel.</li><li>Feld abhaken, wenn eure Gruppe die Übung geschafft hat.</li><li>Für jedes erledigte Feld gibt es 1 Punkt. Wenn ihr bei einer Übung am schnellsten wart, tragt zusätzlich 1 Extrapunkt im Feld ein.</li></ul></section>
 
     <section class="bingo-wrap"><div id="bingo" class="bingo"></div></section>
   </main>
@@ -49,10 +49,10 @@ function lines(){const L=[];for(let r=0;r<5;r++)L.push([0,1,2,3,4].map(c=>r*5+c)
 function bingoLines(){return lines().filter(line=>line.every(pos=>state.done[pos]))}
 function render(){
  $('#name1').value=state.names?.[0]||''; $('#name2').value=state.names?.[1]||'';
- const bingos=bingoLines(); const bingoPos=new Set(bingos.flat()); const doneN=Object.values(state.done).filter(Boolean).length; const extra=Object.values(state.points).reduce((s,v)=>s+(parseInt(v,10)||0),0); const total=extra+bingos.length*2;
+ const bingos=bingoLines(); const bingoPos=new Set(bingos.flat()); const doneN=Object.values(state.done).filter(Boolean).length; const extra=Object.values(state.points).reduce((s,v)=>s+(parseInt(v,10)||0),0); const total=doneN+extra+bingos.length*2;
  $('#doneCount').textContent=doneN; $('#bingoCount').textContent=bingos.length; $('#totalPoints').textContent=total; $('#bar').style.width=`${doneN/25*100}%`; $('#winBox').hidden=bingos.length===0;
  const board=$('#bingo'); board.innerHTML='';
- state.card.forEach((exIndex,pos)=>{const [name,target]=exercises[exIndex]; const cell=document.createElement('div'); cell.className='cell'+(state.done[pos]?' done':'')+(bingoPos.has(pos)?' bingo-line':''); cell.innerHTML=`<span class="badge">✓</span><div class="cell-head"><input class="check" type="checkbox" ${state.done[pos]?'checked':''} aria-label="${name} erledigt"><div><div class="exercise">${name}</div><div class="target">${target}</div></div></div><div class="points"><label>Zusatzpunkte</label><input type="number" min="0" step="1" inputmode="numeric" value="${state.points[pos]||''}" placeholder="0"></div>`;
+ state.card.forEach((exIndex,pos)=>{const [name,target]=exercises[exIndex]; const cell=document.createElement('div'); cell.className='cell'+(state.done[pos]?' done':'')+(bingoPos.has(pos)?' bingo-line':''); cell.innerHTML=`<span class="badge">✓</span><div class="cell-head"><input class="check" type="checkbox" ${state.done[pos]?'checked':''} aria-label="${name} erledigt"><div><div class="exercise">${name}</div><div class="target">${target}</div></div></div><div class="points"><label>Schnellsten-Extrapunkt</label><input type="number" min="0" step="1" inputmode="numeric" value="${state.points[pos]||''}" placeholder="0 oder 1"></div>`;
  cell.querySelector('.check').addEventListener('change',e=>{state.done[pos]=e.target.checked;save();render()}); cell.querySelector('input[type=number]').addEventListener('input',e=>{state.points[pos]=e.target.value;save();render()}); board.appendChild(cell);});
 }
 ['name1','name2'].forEach((id,i)=>$("#"+id).addEventListener('input',e=>{state.names=state.names||['',''];state.names[i]=e.target.value;save()}));
